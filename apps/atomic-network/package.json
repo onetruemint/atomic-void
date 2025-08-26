@@ -1,8 +1,0 @@
-{
-  "name": "atomic-network",
-  "version": "1.0.0",
-  "description": "The maintainer of all data that flows through the Domain",
-  "main": "index.js",
-  "author": "Jonathan Yeh",
-  "license": "MIT"
-}
