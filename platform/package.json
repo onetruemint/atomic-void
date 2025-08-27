@@ -1,0 +1,33 @@
+{
+  "name": "@atomic-void/platform",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Mint",
+  "main": "./dist/index.js",
+  "private": true,
+  "files": [
+    "dist/"
+  ],
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rm -rf ./dist; tsc --build",
+    "clean": "rm -rf dist && rm -rf node_modules",
+    "dev": "npm run nodemon --exec ts-node --files src/*",
+    "lint": "npm run eslint src/\"**/*.{ts,tsx}\"",
+    "lint:ci": "npm run lint",
+    "lint:fix": "npm run lint --fix",
+    "test": "npm run jest --coverage --verbose",
+    "test:ci": "npm run jest --config=./jest.config.ci.mjs --verbose",
+    "test:dev": "npm run jest --watch --coverage --verbose"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "http-status-codes": "^2.3.0",
+    "node-cache": "^5.1.2",
+    "typescript": "^5.9.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0"
+  }
+}

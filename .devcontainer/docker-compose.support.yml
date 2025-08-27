@@ -1,18 +1,6 @@
 version: '3.8'
 
-services:  # Database service
-  db:
-    image: postgres:15-alpine
-    environment:
-      POSTGRES_DB: myapp
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    restart: unless-stopped
-
+services:
   # Nginx reverse proxy (optional)
   nginx:
     image: nginx:alpine
@@ -24,6 +12,3 @@ services:  # Database service
     depends_on:
       - app
     restart: unless-stopped
-
-volumes:
-  postgres_data:

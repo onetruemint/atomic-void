@@ -1,33 +1,54 @@
-version: '3.8'
-
 services:
-  # Web application service
-  atomic-webapp:
-    build:
-      context: ../services/ryoiki-tenkai-frontend
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=development
+  atomic-void:
+    image: node:24-bookworm
     volumes:
-      - .:/webapp
-      - /webapp/node_modules
-    restart: unless-stopped
+      - ..:/workspaces:cached
+    network_mode: service:db
+    command: sleep infinity
 
-  atomic-home-inventory:
-    build:
-      context: ../services/home-inventory
-      dockerfile: Dockerfile
-    ports:
-      - "8000:3000"
+  # # Web application service
+  # atomic-webapp-webapp:
+  #   build:
+  #     context: ../services/ryoiki-tenkai-frontend
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - NODE_ENV=development
+  #   volumes:
+  #     - .:/webapp
+  #     - /webapp/node_modules
+  #   restart: unless-stopped
+
+  # atomic-home-inventory:
+  #   build:
+  #     context: ../services/home-inventory
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8000:3000"
+  #   environment:
+  #     - NODE_ENV=development
+  #   volumes:
+  #     - .:/home-inventory
+  #     - /home-inventory/node_modules
+  #   restart: unless-stopped
+
+  # Database service
+  db:
+    image: postgres:15-alpine
     environment:
-      - NODE_ENV=development
+      POSTGRES_DB: myapp
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
     volumes:
-      - .:/home-inventory
-      - /home-inventory/node_modules
+      - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
 
 networks:
   default:
     driver: bridge
+
+volumes:
+  postgres_data:
