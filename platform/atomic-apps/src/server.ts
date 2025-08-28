@@ -1,5 +1,5 @@
-import express, { Request, Response, NextFunction } from 'express';
-import { StatusCodes } from 'http-status-codes';
+import express, { Request, Response, NextFunction } from "express";
+import { StatusCodes } from "http-status-codes";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,35 +15,35 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // Routes
-app.get('/', (req: Request, res: Response) => {
+app.get("/", (req: Request, res: Response) => {
   res.json({
-    message: 'Welcome to Atomic Apps Express Server',
+    message: "Welcome to Atomic Apps Express Server",
     timestamp: new Date().toISOString(),
-    status: 'running'
+    status: "running",
   });
 });
 
-app.get('/health', (req: Request, res: Response) => {
+app.get("/health", (req: Request, res: Response) => {
   res.status(StatusCodes.OK).json({
-    status: 'healthy',
-    timestamp: new Date().toISOString()
+    status: "healthy",
+    timestamp: new Date().toISOString(),
   });
 });
 
 // 404 handler
-app.use('*', (req: Request, res: Response) => {
+app.use("*", (req: Request, res: Response) => {
   res.status(StatusCodes.NOT_FOUND).json({
-    error: 'Route not found',
-    path: req.originalUrl
+    error: "Route not found",
+    path: req.originalUrl,
   });
 });
 
 // Error handling middleware
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error('Error:', err);
+  console.error("Error:", err);
   res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-    error: 'Internal server error',
-    message: err.message
+    error: "Internal server error",
+    message: err.message,
   });
 });
 

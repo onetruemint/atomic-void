@@ -3,10 +3,25 @@
 {
 	"name": "Atomic Void",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-  "dockerComposeFile": "./docker-compose.yml",
-  "service": "atomic-void",
-  "workspaceFolder": "/workspaces",
-  "features": {
+	"dockerComposeFile": "./docker-compose.yml",
+	"service": "atomic-void",
+	"workspaceFolder": "/workspaces",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"dbaeumer.vscode-eslint",
+				"ms-azuretools.vscode-containers",
+				"ms-azuretools.vscode-docker",
+				"eamodio.gitlens",
+				"ms-vscode.vscode-typescript-next",
+				"mintlify.document",
+				"esbenp.prettier-vscode",
+				"TypeScriptTeam.native-preview",
+			]
+		}
+	},
+	"features": {
+		
 	}
 
 	// Features to add to the dev container. More info: https://containers.dev/features.

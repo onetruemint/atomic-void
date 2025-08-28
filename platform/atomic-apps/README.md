@@ -14,17 +14,20 @@ A barebones Express.js application built with TypeScript.
 ## Quick Start
 
 ### Development Mode
+
 ```bash
 npm run dev
 ```
 
 ### Production Build
+
 ```bash
 npm run build
 npm start
 ```
 
 ### Clean Install
+
 ```bash
 npm run clean
 npm install
