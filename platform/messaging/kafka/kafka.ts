@@ -58,7 +58,11 @@ async function retryKafkaConnection(kafkaObj: Producer | Consumer) {
       ) {
         console.warn(`Could not connect ${e.message}`);
       } else {
-        console.error(`Unknown connection error ${e.message}`);
+        console.error(
+          `Unknown connection error ${
+            e instanceof Error ? e.message : String(e)
+          }`
+        );
         connectorKafkaFatalError = true;
       }
     }
