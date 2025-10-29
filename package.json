@@ -1,5 +1,5 @@
 {
-  "name": "atomic-void",
+  "name": "@atomic-void",
   "private": true,
   "version": "1.0.0",
   "description": "",
@@ -8,8 +8,8 @@
     "url": "git+https://github.com/onetruemint/atomic-void.git"
   },
   "workspaces": [
-    "platform/*",
-    "services/*"
+    "platform/**/*",
+    "microservices/*"
   ],
   "author": "Mint",
   "license": "ISC",
