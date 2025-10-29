@@ -10,7 +10,7 @@
   "updateRemoteUserUID": false,
   "remoteUser:": "node",
   "mounts": [
-    "source=${localEnv:HOME}/.ssh,target=/home/root/.ssh,type=bind,consistency=cached"
+    "source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached"
   ],
   "postStartCommand": "git config --global safe.directory /workspaces",
   "overrideCommand": true,
