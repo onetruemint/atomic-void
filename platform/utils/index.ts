@@ -1,3 +1,7 @@
+import dotenv from "dotenv";
+
+dotenv.config({ path: "../../.env" });
+
 /**
  * Fetches a Node environment variable
  * @param variable The variable to look for
