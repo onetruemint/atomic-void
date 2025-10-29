@@ -1,9 +1,19 @@
+networks:
+  kafka:
+    name: kafka
+    driver: bridge
+  ollama:
+    name: ollama
+    driver: bridge
 services:
   atomic-void:
-    image: node:24-bookworm
+    image: ${DOCKER_IMAGE}
+    container_name: atomic-void-app
+    networks:
+      - kafka
+      - ollama
     volumes:
       - ..:/workspaces:cached
-    network_mode: service:db
     command: sleep infinity
 
   # # Web application service
@@ -32,23 +42,3 @@ services:
   #     - .:/home-inventory
   #     - /home-inventory/node_modules
   #   restart: unless-stopped
-
-  # Database service
-  db:
-    image: postgres:15-alpine
-    environment:
-      POSTGRES_DB: myapp
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    restart: unless-stopped
-
-networks:
-  default:
-    driver: bridge
-
-volumes:
-  postgres_data:
