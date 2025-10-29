@@ -1,75 +1,64 @@
-import {
-  Consumer,
-  Producer,
-  Kafka,
-  KafkaMessage,
-  KafkaConfig,
-  EachMessagePayload,
-  KafkaJSNonRetriableError,
-} from "kafkajs";
+import { Publisher } from "../Publisher";
+import { Consumer, Kafka, Producer } from "kafkajs";
+import * as messagingConsts from "./consts";
+import { Subscriber, SubscriberConfig } from "../Subscriber";
 
-let consumer: Consumer;
-let producer: Producer;
+export class KafkaPublisher implements Publisher {
+  private producer: Producer;
 
-export type KafkaCallback = (
-  topic: string,
-  partition: number,
-  message: KafkaMessage
-) => Promise<void>;
+  private constructor(client: string) {
+    const kafka = new Kafka({
+      clientId: client,
+      brokers: messagingConsts.BROKERS,
+    });
+    this.producer = kafka.producer();
+    this.producer.connect();
+  }
 
-export async function initKafka(
-  config: KafkaConfig,
-  topics: Array<string>,
-  callback: KafkaCallback
-): Promise<Producer> {
-  const kafka = new Kafka(config);
-  producer = kafka.producer();
-  consumer = kafka.consumer({
-    groupId: config.clientId ?? "default-consumer-group",
-  });
+  async publish(name: string, data: Object): Promise<void> {
+    await this.producer.send({
+      topic: name,
+      messages: [{ value: JSON.stringify(data) }],
+    });
+  }
 
-  await retryKafkaConnection(producer);
-  await retryKafkaConnection(consumer);
-
-  await consumer.subscribe({ topics, fromBeginning: true });
-
-  await consumer.run({
-    eachMessage: async (payload: EachMessagePayload) => {
-      const { topic, partition, message } = payload;
-      await callback(topic, partition, message);
-    },
-  });
-
-  return producer;
-}
-
-async function retryKafkaConnection(kafkaObj: Producer | Consumer) {
-  let connectorConnected,
-    connectorKafkaFatalError = false;
-
-  while (!connectorConnected && !connectorKafkaFatalError) {
-    try {
-      await kafkaObj.connect();
-      connectorConnected = true;
-    } catch (e) {
-      if (
-        e instanceof KafkaJSNonRetriableError &&
-        e.name === "KafkaJSNumberOfRetriesExceeded"
-      ) {
-        console.warn(`Could not connect ${e.message}`);
-      } else {
-        console.error(
-          `Unknown connection error ${
-            e instanceof Error ? e.message : String(e)
-          }`
-        );
-        connectorKafkaFatalError = true;
-      }
-    }
+  async shutdown(): Promise<void> {
+    await this.producer.disconnect();
   }
 }
 
-export async function shutdownKafka() {
-  await producer.disconnect();
-  await consumer.disconnect();
+export class KafkaSubscriber implements Subscriber {
+  consumer: Consumer;
+
+  private constructor(consumer: Consumer) {
+    this.consumer = consumer;
+  }
+
+  async create(config: SubscriberConfig): Promise<Subscriber> {
+    const kafka = new Kafka({
+      clientId: config.clientId,
+      brokers: messagingConsts.BROKERS,
+    });
+
+    const consumer = kafka.consumer({
+      groupId: config.groupId,
+    });
+
+    await consumer.connect();
+    await consumer.subscribe({
+      topics: config.topics,
+      fromBeginning: true,
+    });
+    await consumer.run({
+      eachMessage: async ({ topic, partition, message }) => {
+        config.callback(topic, partition, message);
+      },
+    });
+
+    return new KafkaSubscriber(consumer);
+  }
+
+  async shutdown(): Promise<void> {
+    await this.consumer.disconnect();
+  }
 }
