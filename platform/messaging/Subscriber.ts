@@ -1,6 +1,4 @@
-export interface Subscriber {
-  create(config: SubscriberConfig): Promise<Subscriber>;
-}
+export interface Subscriber {}
 
 export interface SubscriberConfig {
   clientId: string;

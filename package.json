@@ -1,5 +1,5 @@
 {
-  "name": "@atomic-void",
+  "name": "atomic-void",
   "private": true,
   "version": "1.0.0",
   "description": "",
@@ -9,7 +9,7 @@
   },
   "workspaces": [
     "platform/**/*",
-    "microservices/*"
+    "apps/**/*"
   ],
   "author": "Mint",
   "license": "ISC",

@@ -1,3 +1,4 @@
+name: Atomic-Void-Devcontainer
 networks:
   kafka:
     name: kafka
@@ -6,39 +7,12 @@ networks:
     name: ollama
     driver: bridge
 services:
-  atomic-void:
+  app:
     image: ${DOCKER_IMAGE}
-    container_name: atomic-void-app
+    container_name: app
     networks:
       - kafka
       - ollama
     volumes:
       - ..:/workspaces:cached
     command: sleep infinity
-
-  # # Web application service
-  # atomic-webapp-webapp:
-  #   build:
-  #     context: ../services/ryoiki-tenkai-frontend
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "3000:3000"
-  #   environment:
-  #     - NODE_ENV=development
-  #   volumes:
-  #     - .:/webapp
-  #     - /webapp/node_modules
-  #   restart: unless-stopped
-
-  # atomic-home-inventory:
-  #   build:
-  #     context: ../services/home-inventory
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "8000:3000"
-  #   environment:
-  #     - NODE_ENV=development
-  #   volumes:
-  #     - .:/home-inventory
-  #     - /home-inventory/node_modules
-  #   restart: unless-stopped

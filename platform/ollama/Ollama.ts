@@ -1,38 +1,49 @@
-export interface OllamaGenerateResponse {
-  model: string;
-  created_at: string;
-  response: string;
-  done: boolean;
-  done_reason: string;
-  total_duration: number;
-  load_duration: number;
-  prompt_eval_count: number;
-  prompt_eval_duration: number;
-  eval_count: number;
-  eval_duration: number;
-}
+import { fetchEnvVar } from "@platform/utils";
+import {
+  OllamaClient,
+  OllamaGenerateResponse,
+  OllamaModelListResponse,
+} from "./types/Ollama";
 
-export interface OllamaModelListResponse {
-  models: OllamaModel[];
-}
-
-export interface OllamaModel {
-  name: string;
-  modified_at: string;
-  size: number;
-  digest: string;
-  details: {
-    format: string;
-    family: string;
-    families: string[];
-  };
-  parameter_size: string;
-  quantization_level: string;
-}
-
-export interface OllamaClient {
+export default class Ollama implements OllamaClient {
   ollamaApi: string;
   model: string;
 
-  generate(prompt: string): Promise<OllamaGenerateResponse>;
+  constructor(model: string) {
+    this.ollamaApi = fetchEnvVar("OLLAMA_API", "http://ollama:11434/api");
+    this.model = model
+      ? model
+      : fetchEnvVar("DEFAULT_OLLAMA_MODEL", "gemma3:4b");
+  }
+
+  async create(model?: string): Promise<Ollama> {
+    if (
+      !model ||
+      !(await this.listModels()).models.filter(
+        (availableModel) => availableModel.name === model
+      )
+    ) {
+      return new Ollama(fetchEnvVar("DEFAULT_OLLAMA_MODEL", "gemma3:4b"));
+    }
+    return new Ollama(model);
+  }
+
+  async listModels(): Promise<OllamaModelListResponse> {
+    const res = await fetch(`${this.ollamaApi}/tags`);
+
+    return (await res.json()) as OllamaModelListResponse;
+  }
+
+  async generate(prompt: string): Promise<OllamaGenerateResponse> {
+    const res = await fetch(`${this.ollamaApi}/generate`, {
+      method: "POST",
+      body: JSON.stringify({
+        stream: false,
+        model: this.model,
+        prompt,
+      }),
+    });
+
+    return (await res.json()) as OllamaGenerateResponse;
+  }
 }

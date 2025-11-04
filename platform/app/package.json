@@ -1,5 +1,5 @@
 {
-  "name": "atomic-core",
+  "name": "@atomic-void/atomic-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

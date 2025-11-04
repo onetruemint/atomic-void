@@ -4,11 +4,10 @@
   "name": "Atomic Void",
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
   "dockerComposeFile": "./docker-compose.yml",
-  "service": "atomic-void",
+  "service": "app",
   "workspaceFolder": "/workspaces",
   "shutdownAction": "stopCompose",
   "updateRemoteUserUID": false,
-  "remoteUser:": "node",
   "mounts": [
     "source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached"
   ],

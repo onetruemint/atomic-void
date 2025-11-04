@@ -23,7 +23,9 @@
     "test:dev": "npx jest --watch --coverage --verbose"
   },
   "dependencies": {
+    "axios": "^1.13.0",
     "body-parser": "^2.2.0",
+    "cheerio": "^1.1.2",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",

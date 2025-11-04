@@ -1,6 +1,6 @@
-# Atomic Apps Express Server
+# Atomic Void Core Express Server
 
-A barebones Express.js application built with TypeScript.
+A barebones Express.js application built with TypeScript for use to quickstart an Atomic Void application.
 
 ## Features
 
