@@ -16,24 +16,35 @@ export default class GoodNews implements GoodNewsInterface {
   lastAcceptableDate: Date;
   ollamaClient: OllamaClient;
 
-  constructor(period: GoodNewsPeriod) {
-    this.ollamaClient = new Ollama(consts.OLLAMA_MODEL);
+  constructor(period: GoodNewsPeriod, ollamaClient: OllamaClient) {
+    this.ollamaClient = ollamaClient;
     const today = new Date();
     this.lastAcceptableDate = new Date();
     this.lastAcceptableDate.setDate(today.getDate() - period);
   }
 
+  static async create(period: GoodNewsPeriod) {
+    const ollamaClient = await Ollama.create(consts.OLLAMA_MODEL);
+
+    return new GoodNews(period, ollamaClient);
+  }
+
   private async writeSummary(data: GoodNewsSummary[]): Promise<void> {
-    data.sort((a, b) => b.rating - a.rating);
+    data.sort((a, b) => b.score - a.score);
     const now = dayjs();
     const year = now.format("YYYY");
     const today = now.format("MMMMD");
     const lastPeriod = dayjs(this.lastAcceptableDate).format("MMMMD");
-    const dataDir = `${utils.getDirname(import.meta.url)}/data/${year}`;
+    const periodDir = `${lastPeriod}_${today}`;
+    const dataDir = `${utils.getDirname(
+      import.meta.url
+    )}/data/${year}/${periodDir}`;
     await utils.createDirectoriesSync(dataDir);
     for (const summary of data) {
-      const fileName = `${dataDir}/${lastPeriod}_${today}_${summary.article.headline.source}.txt`;
-      await utils.appendFileSync(fileName, JSON.stringify(summary, null, 2));
+      const subjectFile = `${dataDir}/${summary.article.headline.source}.txt`;
+      const allFile = `${dataDir}/all.txt`;
+      await utils.appendFileSync(subjectFile, JSON.stringify(summary, null, 2));
+      await utils.appendFileSync(allFile, JSON.stringify(summary, null, 2));
     }
   }
 
@@ -97,11 +108,11 @@ export default class GoodNews implements GoodNewsInterface {
       `${article.headline.title} ${article.content}`
     );
 
-    const data = Number(res.response);
+    const score = Number(res.response);
 
     return {
       article: article,
-      rating: data,
+      score,
     };
   }
 
@@ -118,11 +129,8 @@ export default class GoodNews implements GoodNewsInterface {
     const summaries: GoodNewsSummary[] = [];
     for (const article of articles) {
       const summary = await this.generateSummary(article);
-      if (summary.rating > 6) {
-        summaries.push({
-          article,
-          rating: summary.rating,
-        });
+      if (summary.score > 6) {
+        summaries.push(summary);
       }
     }
 
@@ -131,7 +139,7 @@ export default class GoodNews implements GoodNewsInterface {
 }
 
 async function main() {
-  const news = new GoodNews(GoodNewsPeriod.WEEK);
+  const news = await GoodNews.create(GoodNewsPeriod.WEEK);
   news.fetchTopStories();
 }
 

@@ -28,3 +28,40 @@ export function getDirname(urlPath: string): string {
   const filename = fileURLToPath(urlPath);
   return path.dirname(filename);
 }
+
+export function stripMarkdownArtifacts(input: string): string {
+  if (typeof input !== "string") return input;
+
+  return (
+    input
+      // Remove code blocks ```...```
+      .replace(/```[\s\S]*?```/g, "")
+      // Remove inline code `...`
+      .replace(/`([^`]*)`/g, "$1")
+      // Remove bold/italic markers (**text**, *text*, __text__, _text_)
+      .replace(/(\*\*|__)(.*?)\1/g, "$2")
+      .replace(/(\*|_)(.*?)\1/g, "$2")
+      // Remove markdown links [text](url)
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+      // Remove images ![alt](url)
+      .replace(/!\[([^\]]*)\]\([^)]+\)/g, "$1")
+      // Remove headers (##, ###, etc.)
+      .replace(/(^|\n)#+\s*(.*)/g, "$2")
+      // Remove blockquotes >
+      .replace(/(^|\n)>\s*/g, "")
+      // Remove lists (-, *, +, or numbers)
+      .replace(/(^|\n)(\s*[-*+]\s+)/g, "\n")
+      .replace(/(^|\n)\s*\d+\.\s+/g, "\n")
+      // Remove horizontal rules (---, ***, ___)
+      .replace(/(^|\n)(---|\*\*\*|___)\s*(\n|$)/g, "\n")
+      // Normalize whitespace and remove newlines
+      .replace(/\n+/g, " ")
+      .replace(/\r/g, "")
+      // Remove smart quotes and other odd punctuation
+      .replace(/[“”]/g, '"')
+      .replace(/[‘’]/g, "'")
+      // Collapse multiple spaces
+      .replace(/\s{2,}/g, " ")
+      .trim()
+  );
+}

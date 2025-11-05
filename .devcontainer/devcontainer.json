@@ -24,7 +24,8 @@
         "ms-vscode.vscode-typescript-next",
         "mintlify.document",
         "esbenp.prettier-vscode",
-        "TypeScriptTeam.native-preview"
+        "TypeScriptTeam.native-preview",
+        "Postman.postman-for-vscode"
       ]
     }
   }

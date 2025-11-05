@@ -31,7 +31,6 @@ export interface OllamaModel {
 }
 
 export interface OllamaClient {
-  ollamaApi: string;
   model: string;
 
   generate(prompt: string): Promise<OllamaGenerateResponse>;

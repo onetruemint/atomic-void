@@ -24,6 +24,7 @@ export interface GoodNewsH3 {
 }
 
 export interface GoodNewsHeadline {
+  dateString: string;
   date: Date;
   href: string;
   rel: string;
@@ -33,7 +34,7 @@ export interface GoodNewsHeadline {
 
 export interface GoodNewsSummary {
   article: GoodNewsArticle;
-  rating: number;
+  score: number;
 }
 
 export enum GoodNewsPeriod {
