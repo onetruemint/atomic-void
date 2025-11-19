@@ -1,6 +1,6 @@
-# OneTrueMint Home Core Express Server
+# Atomic Void Core Express Server
 
-A barebones Express.js application built with TypeScript for use to quickstart an OTM application.
+A barebones Express.js application built with TypeScript for use to quickstart an Atomic Void application.
 
 ## Features
 

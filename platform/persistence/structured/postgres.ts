@@ -25,7 +25,7 @@ export class PostgresPersistence<T> implements Persistence<T> {
     const defaultConfig: PostgresConfig = {
       host: fetchEnvVar("POSTGRES_HOST", "localhost"),
       port: parseInt(fetchEnvVar("POSTGRES_PORT", "5432")),
-      database: fetchEnvVar("POSTGRES_DB", "otm-template"),
+      database: fetchEnvVar("POSTGRES_DB", "atomic-void"),
       user: fetchEnvVar("POSTGRES_USER", "postgres"),
       password: fetchEnvVar("POSTGRES_PASSWORD", "password"),
       ssl: process.env["NODE_ENV"] === "production",

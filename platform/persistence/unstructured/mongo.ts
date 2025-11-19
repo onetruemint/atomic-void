@@ -45,9 +45,9 @@ export class MongoPersistence<T extends Record<string, any>>
     const defaultConfig: MongoConfig = {
       host: fetchEnvVar("MONGO_HOST", "localhost"),
       port: parseInt(fetchEnvVar("MONGO_PORT", "27017")),
-      database: fetchEnvVar("MONGO_DB", "otm-template"),
-      username: fetchEnvVar("MONGO_USERNAME", "otm-template-user"),
-      password: fetchEnvVar("MONGO_PASSWORD", "otm-template-password"),
+      database: fetchEnvVar("MONGO_DB", "atomic-void"),
+      username: fetchEnvVar("MONGO_USERNAME", "atomic-void-user"),
+      password: fetchEnvVar("MONGO_PASSWORD", "atomic-void-password"),
       authSource: fetchEnvVar("MONGO_AUTH_SOURCE", "admin"),
       ssl: process.env["NODE_ENV"] === "production",
       maxPoolSize: 10,
@@ -91,7 +91,7 @@ export class MongoPersistence<T extends Record<string, any>>
         : "";
     const host = config.host || "localhost";
     const port = config.port ? `:${config.port}` : "";
-    const database = config.database || "otm-template";
+    const database = config.database || "atomic-void";
     const authSource = config.authSource
       ? `?authSource=${config.authSource}`
       : "";
