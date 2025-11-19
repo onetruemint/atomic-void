@@ -1,15 +1,20 @@
 # Persistence Layer
 
-A unified persistence layer for the Atomic Void platform that supports both PostgreSQL and MongoDB databases through a common interface.
+A unified persistence layer for the OneTrueMint Home platform that supports both
+PostgreSQL and MongoDB databases through a common interface.
 
 ## Overview
 
-The persistence layer provides a consistent API for database operations across different database types. It includes:
+The persistence layer provides a consistent API for database operations across
+different database types. It includes:
 
 - **Persistence Interface**: Common interface for all database operations
-- **PostgreSQL Implementation**: Full-featured PostgreSQL persistence with connection pooling
-- **MongoDB Implementation**: Full-featured MongoDB persistence with document support
-- **Factory Functions**: Easy creation of persistence instances based on database type
+- **PostgreSQL Implementation**: Full-featured PostgreSQL persistence with
+  connection pooling
+- **MongoDB Implementation**: Full-featured MongoDB persistence with document
+  support
+- **Factory Functions**: Easy creation of persistence instances based on database
+  type
 
 ## Quick Start
 
@@ -131,7 +136,7 @@ console.log(`Using ${dbType} database`);
 
 - `POSTGRES_HOST` (default: "localhost")
 - `POSTGRES_PORT` (default: "5432")
-- `POSTGRES_DB` (default: "atomic-void")
+- `POSTGRES_DB` (default: "otm-template")
 - `POSTGRES_USER` (default: "postgres")
 - `POSTGRES_PASSWORD` (default: "password")
 
@@ -139,9 +144,9 @@ console.log(`Using ${dbType} database`);
 
 - `MONGO_HOST` (default: "localhost")
 - `MONGO_PORT` (default: "27017")
-- `MONGO_DB` (default: "atomic-void")
-- `MONGO_USERNAME` (default: "atomic-void-user")
-- `MONGO_PASSWORD` (default: "atomic-void-password")
+- `MONGO_DB` (default: "otm-template")
+- `MONGO_USERNAME` (default: "otm-template-user")
+- `MONGO_PASSWORD` (default: "otm-template-password")
 - `MONGO_AUTH_SOURCE` (default: "admin")
 
 ## Common Interface Methods

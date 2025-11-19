@@ -4,7 +4,10 @@
     "module": "ES2022",
     "lib": ["ES2022", "DOM"],
     "types": ["node", "jest"],
-    "typeRoots": ["./node_modules/@types", "./atomic-core/node_modules/@types"],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./otm-template-core/node_modules/@types"
+    ],
     "outDir": "./dist",
     "rootDir": "./",
     "strict": true,

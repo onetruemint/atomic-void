@@ -17,7 +17,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 // Routes
 app.get("/", (req: Request, res: Response) => {
   res.json({
-    message: "Welcome to Atomic Apps Express Server",
+    message: "Welcome to OTM Template Express Server",
     timestamp: new Date().toISOString(),
     status: "running",
   });

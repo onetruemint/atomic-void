@@ -1,4 +1,4 @@
-name: Atomic-Void-Backend
+name: OTM-Template-Backend
 volumes:
   postgres_data:
   kafka_data:
@@ -37,7 +37,7 @@ services:
     networks:
       - storage
     environment:
-      POSTGRES_DB: atomic-void
+      POSTGRES_DB: otm-template
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     ports:
@@ -53,8 +53,8 @@ services:
       - storage
     restart: unless-stopped
     environment:
-      MONGO_INITDB_ROOT_USERNAME: atomic-void-user
-      MONGO_INITDB_ROOT_PASSWORD: atomic-void-password
+      MONGO_INITDB_ROOT_USERNAME: otm-template-user
+      MONGO_INITDB_ROOT_PASSWORD: otm-template-password
 
   kafka:
     image: ${KAFKA_IMAGE}

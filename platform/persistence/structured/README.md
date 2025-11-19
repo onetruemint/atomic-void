@@ -1,6 +1,6 @@
 # PostgresPersistence
 
-A PostgreSQL implementation of the Persistence interface for the Atomic Void platform.
+A PostgreSQL implementation of the Persistence interface for the OTM Template platform.
 
 ## Usage
 
@@ -66,7 +66,7 @@ The class uses the following environment variables with defaults:
 
 - `POSTGRES_HOST` (default: "localhost")
 - `POSTGRES_PORT` (default: "5432")
-- `POSTGRES_DB` (default: "atomic-void")
+- `POSTGRES_DB` (default: "otm-template")
 - `POSTGRES_USER` (default: "postgres")
 - `POSTGRES_PASSWORD` (default: "password")
 

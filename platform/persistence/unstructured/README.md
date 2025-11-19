@@ -1,6 +1,6 @@
 # MongoPersistence
 
-A MongoDB implementation of the Persistence interface for the Atomic Void platform.
+A MongoDB implementation of the Persistence interface for the OTM Template platform.
 
 ## Usage
 
@@ -84,9 +84,9 @@ The class uses the following environment variables with defaults:
 
 - `MONGO_HOST` (default: "localhost")
 - `MONGO_PORT` (default: "27017")
-- `MONGO_DB` (default: "atomic-void")
-- `MONGO_USERNAME` (default: "atomic-void-user")
-- `MONGO_PASSWORD` (default: "atomic-void-password")
+- `MONGO_DB` (default: "otm-template")
+- `MONGO_USERNAME` (default: "otm-template-user")
+- `MONGO_PASSWORD` (default: "otm-template-password")
 - `MONGO_AUTH_SOURCE` (default: "admin")
 
 ## Features
